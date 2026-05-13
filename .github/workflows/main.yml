@@ -1,18 +1,27 @@
-name: Hosting Bot 24/7
+name: Hosting Bot 24/7 - Optimized
 
 on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/15 * * * *' 
   workflow_dispatch:
+
+concurrency:
+  group: bot-running
+  cancel-in-progress: true
 
 jobs:
   run-bot:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write 
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -21,9 +30,30 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          pip install flask python-telegram-bot psutil requests aiohttp pyTelegramBotAPI telethon
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run Bot
+      - name: Run Bot with High Priority
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PORT: 8080
         run: |
-          python main.py
+          if [ -f "main.py" ]; then
+            until python main.py; do
+              echo "Restarting..."
+              sleep 5
+            done
+          else
+            exit 1
+          fi
+
+      - name: Auto-Sync Data
+        if: always()
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          mkdir -p hosted_projects
+          git add hosted_projects/
+          git commit -m "Auto-sync" || echo "No changes"
+          git push origin main
