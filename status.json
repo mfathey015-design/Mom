@@ -1,8 +1,12 @@
 {
-  "is_active": fales,
-  "message": "تم إيقاف التطبيق بسبب تحديثات أمنية. برجاء التواصل مع المطور للحصول على أحدث إصدار.",
-  "contact_url": "https://t.me/yourmfathey466"
+  "is_active": false,
+  "message": "⚠️ تم إيقاف التطبيق مؤقتاً بسبب تحديثات أمنية عاجلة. يرجى تحديث التطبيق لأحدث إصدار للحصول على تجربة آمنة ومحسنة.",
+  "contact_url": "https://t.me/yourmfathey466",
+  "version_required": "3.0.0",
+  "update_url": "https://t.me/yourmfathey466",
+  "last_updated": "2026-07-29",
+  "force_update": true,
+  "maintenance_mode": false
 }
-
 
 
