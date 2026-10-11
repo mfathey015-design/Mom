@@ -1,5 +1,5 @@
 {
-  "is_active": true,
+  "is_active": false,
   "message": "تم إيقاف التطبيق بسبب تحديثات أمنية. برجاء التواصل مع المطور للحصول على أحدث إصدار.",
   "contact_url": "https://t.me/mfathey466"
 }
