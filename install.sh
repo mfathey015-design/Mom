@@ -6,6 +6,11 @@ cd $HOME/elmasry-tool
 curl -L -o tool.zip "https://raw.githubusercontent.com/mfathey015-design/Mom/main/ELMASRY-VIP-TERMUX.zip"
 unzip -o tool.zip
 rm -f tool.zip
-# الدخول للمجلد اللي بينتج بعد فك الضغط وتشغيل ملف التشغيل الأساسي
+
+# الدخول داخل مجلد الأداة وتشغيل السكريپت الأساسي الذي يتعامل مع payload.enc
 cd "PAK TOOL"
-bash run.sh
+if [ -f "run.sh" ]; then
+    bash run.sh
+else
+    python3 obb_pak_tool.py
+fi
